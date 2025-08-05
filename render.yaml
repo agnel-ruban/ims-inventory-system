@@ -2,7 +2,6 @@ services:
   # Backend Spring Boot Service
   - type: web
     name: ims-backend
-    runtime: java
     plan: free
     buildCommand: cd backend && ./mvnw clean package -DskipTests
     startCommand: cd backend && java -jar target/ims-0.0.1-SNAPSHOT.jar
@@ -27,8 +26,9 @@ services:
         value: Agnel@70050
 
   # Frontend React Service
-  - type: static
+  - type: web
     name: ims-frontend
+    env: static
     plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
