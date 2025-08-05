@@ -2,7 +2,6 @@ services:
   # Backend Spring Boot Service
   - type: web
     name: ims-backend
-    runtime: java
     plan: free
     buildCommand: cd backend && ./mvnw clean package -DskipTests
     startCommand: cd backend && java -jar target/ims-0.0.1-SNAPSHOT.jar
