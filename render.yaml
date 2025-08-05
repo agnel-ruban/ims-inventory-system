@@ -2,7 +2,7 @@ services:
   # Backend Spring Boot Service
   - type: web
     name: ims-backend
-    env: java
+    runtime: java
     plan: free
     buildCommand: cd backend && ./mvnw clean package -DskipTests
     startCommand: cd backend && java -jar target/ims-0.0.1-SNAPSHOT.jar
@@ -16,7 +16,7 @@ services:
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: ims-database
-          property: username
+          property: user
       - key: SPRING_DATASOURCE_PASSWORD
         fromDatabase:
           name: ims-database
