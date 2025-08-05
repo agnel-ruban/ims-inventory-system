@@ -14,6 +14,12 @@ const initialState: DashboardState = {
   error: null,
 }
 
+// Example async thunk (replace with your actual implementation)
+export const fetchOverview = createAsyncThunk<DashboardOverview>('dashboard/fetchOverview', async () => {
+  // ... fetch logic here ...
+  return {} as DashboardOverview
+})
+
 const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
@@ -24,17 +30,17 @@ const dashboardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase('dashboard/fetchOverview/pending', (state) => {
+      .addCase(fetchOverview.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase('dashboard/fetchOverview/fulfilled', (state, action: PayloadAction<DashboardOverview>) => {
+      .addCase(fetchOverview.fulfilled, (state, action: PayloadAction<DashboardOverview>) => {
         state.loading = false
         state.overview = action.payload
       })
-      .addCase('dashboard/fetchOverview/rejected', (state, action) => {
+      .addCase(fetchOverview.rejected, (state, action) => {
         state.loading = false
-        state.error = action.payload as string
+        state.error = (action.error.message as string) || 'Failed to fetch overview'
       })
   },
 })

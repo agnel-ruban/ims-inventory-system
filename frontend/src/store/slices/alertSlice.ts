@@ -14,6 +14,12 @@ const initialState: AlertState = {
   error: null,
 }
 
+// Example async thunk (replace with your actual implementation)
+export const fetchAlerts = createAsyncThunk<Alert[]>('alerts/fetchAlerts', async () => {
+  // ... fetch logic here ...
+  return []
+})
+
 const alertSlice = createSlice({
   name: 'alerts',
   initialState,
@@ -24,17 +30,17 @@ const alertSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase('alerts/fetchAlerts/pending', (state) => {
+      .addCase(fetchAlerts.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase('alerts/fetchAlerts/fulfilled', (state, action: PayloadAction<Alert[]>) => {
+      .addCase(fetchAlerts.fulfilled, (state, action: PayloadAction<Alert[]>) => {
         state.loading = false
         state.alerts = action.payload
       })
-      .addCase('alerts/fetchAlerts/rejected', (state, action) => {
+      .addCase(fetchAlerts.rejected, (state, action) => {
         state.loading = false
-        state.error = action.payload as string
+        state.error = (action.error.message as string) || 'Failed to fetch alerts'
       })
   },
 })

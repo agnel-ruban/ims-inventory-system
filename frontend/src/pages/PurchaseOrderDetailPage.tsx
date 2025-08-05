@@ -18,6 +18,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  IconButton,
 } from '@mui/material'
 import {
   ArrowBack as ArrowBackIcon,
@@ -168,7 +169,7 @@ const PurchaseOrderDetailPage: React.FC = () => {
                 icon={getStatusIcon(order.status || '')}
                 label={order.status || 'Unknown'}
                 color={getStatusColor(order.status || '') as any}
-                size="large"
+                size="medium"
               />
             </Box>
             <Box sx={{ textAlign: 'right' }}>
