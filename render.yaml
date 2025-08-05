@@ -27,9 +27,8 @@ services:
         value: Agnel@70050
 
   # Frontend React Service
-  - type: web
+  - type: static
     name: ims-frontend
-    env: static
     plan: free
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
