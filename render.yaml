@@ -1,0 +1,44 @@
+services:
+  # Backend Spring Boot Service
+  - type: web
+    name: ims-backend
+    env: java
+    plan: free
+    buildCommand: cd backend && ./mvnw clean package -DskipTests
+    startCommand: cd backend && java -jar target/ims-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: ims-database
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: ims-database
+          property: username
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: ims-database
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: APP_ADMIN_PASSWORD
+        value: Agnel@70050
+
+  # Frontend React Service
+  - type: web
+    name: ims-frontend
+    env: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://ims-backend.onrender.com
+
+databases:
+  - name: ims-database
+    databaseName: ims
+    user: ims_user
+    plan: free 
