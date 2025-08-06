@@ -43,9 +43,17 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Public endpoints
+                // Public endpoints - be very explicit about auth endpoints
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/auth/**").permitAll() // Also allow without /api prefix
+                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/api/auth/login").permitAll()
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/api/auth/validate").permitAll()
+                .requestMatchers("/auth/validate").permitAll()
+                .requestMatchers("/api/auth/change-password").permitAll()
+                .requestMatchers("/auth/change-password").permitAll()
+                .requestMatchers("/api/auth/test").permitAll()
+                .requestMatchers("/auth/test").permitAll()
 
                 // Admin only endpoints
                 .requestMatchers("/api/warehouses/**").hasRole("ADMIN")

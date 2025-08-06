@@ -33,6 +33,14 @@ public class AuthController {
     @Autowired
     private com.example.ims.security.TokenBlacklistService tokenBlacklistService;
 
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Auth endpoint is accessible");
+        response.put("timestamp", new Date());
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 
