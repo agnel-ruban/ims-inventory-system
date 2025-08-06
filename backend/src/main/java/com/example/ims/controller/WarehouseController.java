@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/warehouses")
+@RequestMapping("/warehouses")
 public class WarehouseController {
     @Autowired
     private WarehouseService warehouseService;

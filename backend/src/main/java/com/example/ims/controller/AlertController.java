@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/alerts")
+@RequestMapping("/alerts")
 @Validated
 public class AlertController {
     @Autowired

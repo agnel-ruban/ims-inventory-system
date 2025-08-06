@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/sales-orders")
+@RequestMapping("/sales-orders")
 public class SalesOrderController {
 
     @Autowired

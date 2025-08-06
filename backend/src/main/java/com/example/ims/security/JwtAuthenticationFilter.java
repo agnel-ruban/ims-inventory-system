@@ -148,7 +148,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (shouldSkip) {
             logger.info("✅ SKIPPING JWT filter for: " + fullPath);
         } else {
-            logger.info("❌ WILL APPLY JWT filter for: " + fullPath);
+            logger.info("🔒 WILL APPLY JWT filter for: " + fullPath);
         }
         logger.info("=== END JWT FILTER DEBUG ===");
         

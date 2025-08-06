@@ -35,26 +35,38 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        System.out.println("=== CONFIGURING SECURITY - ULTIMATE FIX ===");
-        
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Disable security completely for auth endpoints
+                // Public endpoints
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/error").permitAll()
-                
+
+                // Admin only endpoints
+                .requestMatchers("/warehouses/**").hasRole("ADMIN")
+                .requestMatchers("/inventory/**").hasRole("ADMIN")
+                .requestMatchers("/purchase-orders/**").hasRole("ADMIN")
+                .requestMatchers("/alerts/**").hasRole("ADMIN")
+                .requestMatchers("/dashboard/**").hasRole("ADMIN")
+                .requestMatchers("/users/**").hasRole("ADMIN")
+
+                // Product endpoints - GET requires authentication (both roles), others require ADMIN
+                .requestMatchers(HttpMethod.GET, "/products/**").authenticated()
+                .requestMatchers("/products/**").hasRole("ADMIN")
+
+                // Sales orders - both customers and admins can access
+                .requestMatchers("/sales-orders/**").authenticated()
+
                 // All other requests need authentication
                 .anyRequest().authenticated()
             )
-            .userDetailsService(userDetailsService);
-            // Temporarily disable JWT filter to test
-            // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .userDetailsService(userDetailsService)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        System.out.println("=== SECURITY CONFIGURATION COMPLETED ===");
+        System.out.println("=== SECURITY CONFIGURATION COMPLETED WITH JWT ===");
         return http.build();
     }
 
@@ -66,7 +78,7 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

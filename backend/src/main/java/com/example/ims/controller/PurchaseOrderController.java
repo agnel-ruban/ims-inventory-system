@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/purchase-orders")
+@RequestMapping("/purchase-orders")
 public class PurchaseOrderController {
     @Autowired
     private PurchaseOrderService purchaseOrderService;
