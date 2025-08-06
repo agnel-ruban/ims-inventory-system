@@ -19,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -68,13 +69,13 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, 
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest,
                                           @RequestHeader("Authorization") String authorizationHeader) {
         try {
             // Get current authenticated user
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
-            
+
             // Change password
             userService.changePassword(
                 currentUsername,
@@ -119,7 +120,7 @@ public class AuthController {
             }
 
             String token = authorizationHeader.substring(7);
-            
+
             // Check if token is blacklisted
             if (tokenBlacklistService.isBlacklisted(token)) {
                 Map<String, Object> errorResponse = new HashMap<>();
@@ -128,7 +129,7 @@ public class AuthController {
                 errorResponse.put("code", "TOKEN_BLACKLISTED");
                 return ResponseEntity.status(401).body(errorResponse);
             }
-            
+
             if (!tokenProvider.validateToken(token)) {
                 Map<String, Object> errorResponse = new HashMap<>();
                 errorResponse.put("error", "Token validation failed");
@@ -139,10 +140,10 @@ public class AuthController {
 
             String username = tokenProvider.getUsernameFromToken(token);
             Date expirationDate = tokenProvider.getExpirationDateFromToken(token);
-            
+
             // Get user information
             User user = userService.getUserByUsername(username);
-            
+
             Map<String, Object> response = new HashMap<>();
             response.put("user", user);
             response.put("valid", true);
@@ -171,13 +172,13 @@ public class AuthController {
             }
 
             String token = authorizationHeader.substring(7);
-            
+
             Map<String, Object> response = new HashMap<>();
             response.put("tokenLength", token.length());
             response.put("isBlacklisted", tokenBlacklistService.isBlacklisted(token));
             response.put("blacklistSize", tokenBlacklistService.getBlacklistSize());
             response.put("isValid", tokenProvider.validateToken(token));
-            
+
             if (tokenProvider.validateToken(token)) {
                 response.put("username", tokenProvider.getUsernameFromToken(token));
                 response.put("expirationDate", tokenProvider.getExpirationDateFromToken(token));
@@ -205,7 +206,7 @@ public class AuthController {
             String token = authorizationHeader.substring(7);
             Date expirationDate = tokenProvider.getExpirationDateFromToken(token);
             tokenBlacklistService.blacklistToken(token, expirationDate.getTime());
-            
+
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Token manually blacklisted");
             response.put("blacklistSize", tokenBlacklistService.getBlacklistSize());
@@ -242,4 +243,4 @@ public class AuthController {
         public String getNewPassword() { return newPassword; }
         public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
     }
-} 
+}
