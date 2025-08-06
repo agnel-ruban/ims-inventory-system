@@ -28,13 +28,16 @@ const inventorySlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase('inventory/fetchInventory/fulfilled', (state, action: PayloadAction<Inventory[]>) => {
+      .addCase('inventory/fetchInventory/fulfilled' as any, (state, action: PayloadAction<Inventory[]>) => {
+          state.loading = false
+          state.inventory = action.payload
+        }
+      )
+      .addCase('inventory/fetchInventory/rejected' as any, (state, action: any) => {
         state.loading = false
-        state.inventory = action.payload
-      })
-      .addCase('inventory/fetchInventory/rejected', (state, action) => {
-        state.loading = false
-        state.error = action.payload as string
+        state.error =
+          (action.payload as string) ??
+          (action?.error?.message ?? 'Failed to fetch inventory')
       })
   },
 })

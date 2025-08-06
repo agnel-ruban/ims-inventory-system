@@ -1,44 +1,40 @@
-import React, { useState, useEffect } from 'react'
+import { CreateCustomerRequest, userService } from '@/services/userService'
+import { RootState } from '@/store/store'
+import { User } from '@/types'
 import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  Button,
-  TextField,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  Add as AddIcon,
+  AdminPanelSettings as AdminIcon,
+  PersonOff as CustomerIcon,
+  Delete as DeleteIcon,
+  Person as PersonIcon,
+  Refresh as RefreshIcon
+} from '@mui/icons-material'
+import {
   Alert,
+  Box,
+  Button,
   Chip,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  CircularProgress,
+  TextField,
+  Typography
 } from '@mui/material'
-import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Person as PersonIcon,
-  AdminPanelSettings as AdminIcon,
-  PersonOff as CustomerIcon,
-  Refresh as RefreshIcon,
-} from '@mui/icons-material'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
-import { userService, CreateCustomerRequest } from '@/services/userService'
-import { User } from '@/types'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 const UserManagementPage: React.FC = () => {
   const { user: currentUser } = useSelector((state: RootState) => state.auth)

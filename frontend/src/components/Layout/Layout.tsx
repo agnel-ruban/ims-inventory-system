@@ -1,44 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import profileAvatar from '@/assets/profile-avatar.png'
+import { alertService } from '@/services/alertService'
+import { logout } from '@/store/slices/authSlice'
+import { RootState } from '@/store/store'
 import {
-  Box,
-  Drawer,
+  Dashboard,
+  Inventory,
+  LocalShipping,
+  Lock as LockIcon,
+  Logout,
+  Menu as MenuIcon,
+  Notifications,
+  People,
+  ShoppingCart,
+  Store,
+  Warehouse as WarehouseIcon
+} from '@mui/icons-material'
+import {
   AppBar,
-  Toolbar,
-  List,
-  Typography,
+  Badge,
+  Box,
   Divider,
+  Drawer,
   IconButton,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Avatar,
   Menu,
   MenuItem,
-  useTheme,
-  Badge,
+  Toolbar,
+  Typography,
+  useTheme
 } from '@mui/material'
-import profileAvatar from '@/assets/profile-avatar.png'
-import {
-  Menu as MenuIcon,
-  Dashboard,
-  Inventory,
-  ShoppingCart,
-  LocalShipping,
-  Notifications,
-  People,
-  Store,
-  Logout,
-  Person,
-  Lock as LockIcon,
-  Warehouse as WarehouseIcon,
-} from '@mui/icons-material'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { RootState } from '@/store/store'
-import { logout } from '@/store/slices/authSlice'
-import { alertService } from '@/services/alertService'
+import { Outlet, useNavigate } from 'react-router-dom'
 import ChangePasswordDialog from '../ChangePasswordDialog'
 
 const drawerWidth = 240

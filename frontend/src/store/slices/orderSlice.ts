@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { PurchaseOrder, SalesOrder } from '@/types'
-import toast from 'react-hot-toast'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface OrderState {
   purchaseOrders: PurchaseOrder[]
@@ -30,13 +29,13 @@ const orderSlice = createSlice({
         state.loading = true
         state.error = null
       })
-      .addCase('orders/fetchPurchaseOrders/fulfilled', (state, action: PayloadAction<PurchaseOrder[]>) => {
+      .addCase('orders/fetchPurchaseOrders/fulfilled' as any, (state, action: PayloadAction<PurchaseOrder[]>) => {
         state.loading = false
         state.purchaseOrders = action.payload
       })
-      .addCase('orders/fetchPurchaseOrders/rejected', (state, action) => {
+      .addCase('orders/fetchPurchaseOrders/rejected' as any, (state, action: any) => {
         state.loading = false
-        state.error = action.payload as string
+        state.error = (action.payload as string) ?? (action?.error?.message ?? 'Failed to fetch purchase orders')
       })
   },
 })

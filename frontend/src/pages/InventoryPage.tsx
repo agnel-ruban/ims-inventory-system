@@ -1,8 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import { inventoryService } from '@/services/inventoryService'
+import { RootState } from '@/store/store'
+import { Inventory } from '@/types'
 import {
+  Category as CategoryIcon,
+  CheckCircle as CheckCircleIcon,
+  Error as ErrorIcon,
+  Inventory as InventoryIcon,
+  LocationOn as LocationIcon,
+  Search as SearchIcon,
+  Warning as WarningIcon
+} from '@mui/icons-material'
+import {
+  Alert,
   Box,
-  Typography,
+  Card,
+  CardContent,
+  Chip,
+  CircularProgress,
   Container,
+  Grid,
+  InputAdornment,
   Paper,
   Table,
   TableBody,
@@ -10,39 +27,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Button,
   TextField,
-  InputAdornment,
-  Chip,
-  Alert,
-  CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Grid,
-  Card,
-  CardContent,
-  IconButton,
-  Tooltip,
+  Typography
 } from '@mui/material'
-import {
-  Search as SearchIcon,
-  Add as AddIcon,
-  Edit as EditIcon,
-  Delete as DeleteIcon,
-  Inventory as InventoryIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Error as ErrorIcon,
-  LocationOn as LocationIcon,
-  Category as CategoryIcon,
-} from '@mui/icons-material'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
-import { inventoryService } from '@/services/inventoryService'
-import { Inventory, Product, Warehouse } from '@/types'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 const InventoryPage: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth)

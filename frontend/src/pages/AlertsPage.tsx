@@ -1,54 +1,51 @@
-import React, { useState, useEffect } from 'react'
+import { alertService } from '@/services/alertService'
+import { RootState } from '@/store/store'
+import { Alert as AlertType } from '@/types'
 import {
+  CheckCircle as CheckCircleIcon,
+  BugReport as DebugIcon,
+  Error as ErrorIcon,
+  Inventory as InventoryIcon,
+  LocationOn as LocationIcon,
+  Notifications as NotificationsIcon,
+  Refresh as RefreshIcon,
+  Search as SearchIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Visibility as VisibilityIcon,
+  Warning as WarningIcon
+} from '@mui/icons-material'
+import {
+  Alert,
+  Badge,
   Box,
-  Typography,
-  Container,
-  Paper,
   Button,
+  Card,
+  CardContent,
+  Chip,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Chip,
-  CircularProgress,
-  Alert,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-  Tooltip,
-  Badge,
   TextField,
-  InputAdornment,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  Tooltip,
+  Typography,
 } from '@mui/material'
-import {
-  Refresh as RefreshIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Cancel as CancelIcon,
-  Visibility as VisibilityIcon,
-  ShoppingCart as ShoppingCartIcon,
-  BugReport as DebugIcon,
-  Search as SearchIcon,
-  FilterList as FilterIcon,
-  Notifications as NotificationsIcon,
-  Inventory as InventoryIcon,
-  LocationOn as LocationIcon,
-  Category as CategoryIcon,
-  Error as ErrorIcon,
-} from '@mui/icons-material'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { RootState } from '@/store/store'
-import { Alert as AlertType } from '@/types'
-import { alertService } from '@/services/alertService'
-import toast from 'react-hot-toast'
 
 const AlertsPage: React.FC = () => {
   const navigate = useNavigate()

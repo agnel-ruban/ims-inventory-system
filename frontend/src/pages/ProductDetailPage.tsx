@@ -1,48 +1,46 @@
-import React, { useState, useEffect } from 'react'
+import { productService } from '@/services/productService'
+import { RootState } from '@/store/store'
+import { Product } from '@/types'
 import {
+  ArrowBack as ArrowBackIcon,
+  Business as BrandIcon,
+  Category as CategoryIcon,
+  CheckCircle as CheckCircleIcon,
+  Description as DescriptionIcon,
+  Error as ErrorIcon,
+  Info as InfoIcon,
+  Inventory as InventoryIcon,
+  LocationOn as LocationIcon,
+  AttachMoney as MoneyIcon,
+  Warning as WarningIcon,
+} from '@mui/icons-material'
+import {
+  Alert,
   Box,
-  Typography,
-  Container,
-  Paper,
-  Grid,
+  Button,
   Card,
-  CardContent,
   CardMedia,
   Chip,
-  Button,
-  Divider,
+  CircularProgress,
+  Container,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Alert,
-  CircularProgress,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  Typography
 } from '@mui/material'
-import {
-  ArrowBack as ArrowBackIcon,
-  Inventory as InventoryIcon,
-  LocationOn as LocationIcon,
-  AttachMoney as MoneyIcon,
-  Category as CategoryIcon,
-  Business as BrandIcon,
-  Description as DescriptionIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon,
-  Error as ErrorIcon,
-  Info as InfoIcon,
-} from '@mui/icons-material'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
-import { productService } from '@/services/productService'
-import { Product, Category } from '@/types'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>()

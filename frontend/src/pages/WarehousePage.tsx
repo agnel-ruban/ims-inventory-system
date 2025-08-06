@@ -1,45 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  IconButton,
-  Chip,
-  Alert,
-  CircularProgress,
-  Fab,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
-} from '@mui/material'
+import { warehouseService } from '@/services/warehouseService'
+import { RootState } from '@/store/store'
+import { Warehouse } from '@/types'
 import {
   Add as AddIcon,
-  Edit as EditIcon,
   Delete as DeleteIcon,
+  Edit as EditIcon,
   LocationOn as LocationIcon,
-  Phone as PhoneIcon,
-  Email as EmailIcon,
-  Warehouse as WarehouseIcon,
+  Warehouse as WarehouseIcon
 } from '@mui/icons-material'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
-import { warehouseService } from '@/services/warehouseService'
-import { Warehouse } from '@/types'
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Fab,
+  Grid,
+  TextField,
+  Typography
+} from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 
 const WarehousePage: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth)

@@ -1,41 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import { categoryService } from '@/services/categoryService'
+import { productService } from '@/services/productService'
+import { warehouseService } from '@/services/warehouseService'
+import { RootState } from '@/store/store'
+import { Category, Warehouse } from '@/types'
 import {
+  ArrowBack as ArrowBackIcon,
+  Category as CategoryIcon,
+  Description as DescriptionIcon,
+  Inventory as InventoryIcon,
+  AttachMoney as MoneyIcon,
+  Save as SaveIcon,
+} from '@mui/icons-material'
+import {
+  Alert,
   Box,
-  Typography,
-  Container,
-  Paper,
-  TextField,
   Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Card,
   CardContent,
   CardMedia,
   Chip,
-  Alert,
   CircularProgress,
+  Container,
+  Grid,
   InputAdornment,
-  Divider,
+  Paper,
+  TextField,
+  Typography
 } from '@mui/material'
-import {
-  Save as SaveIcon,
-  ArrowBack as ArrowBackIcon,
-  Category as CategoryIcon,
-  Inventory as InventoryIcon,
-  AttachMoney as MoneyIcon,
-  Description as DescriptionIcon,
-} from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
-import { productService } from '@/services/productService'
-import { categoryService } from '@/services/categoryService'
-import { warehouseService } from '@/services/warehouseService'
-import { Category, CreateProductRequest, Warehouse } from '@/types'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const ProductCreatePage: React.FC = () => {
   const navigate = useNavigate()

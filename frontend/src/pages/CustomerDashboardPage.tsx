@@ -1,49 +1,46 @@
-import React, { useState, useEffect } from 'react'
+import { productService } from '@/services/productService'
+import { RootState } from '@/store/store'
+import { Product } from '@/types'
 import {
+  ArrowBack as ArrowBackIcon,
+  Business as BusinessIcon,
+  Category as CategoryIcon,
+  Info as InfoIcon,
+  Inventory as InventoryIcon,
+  LocalShipping as LocalShippingIcon,
+  LocationOn as LocationIcon,
+  AttachMoney as PriceIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Store as StoreIcon,
+  Visibility as VisibilityIcon
+} from '@mui/icons-material'
+import {
+  Alert,
   Box,
-  Typography,
-  Container,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
   Button,
-  Paper,
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  CircularProgress,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
-  Chip,
-  CircularProgress,
-  Alert,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+  Paper,
+  Typography,
 } from '@mui/material'
-import {
-  Dashboard as DashboardIcon,
-  Inventory as InventoryIcon,
-  ShoppingCart as ShoppingCartIcon,
-  LocalShipping as LocalShippingIcon,
-  Store as StoreIcon,
-  Visibility as VisibilityIcon,
-  ShoppingBasket as ShoppingBasketIcon,
-  TrendingUp as TrendingUpIcon,
-  Category as CategoryIcon,
-  ArrowBack as ArrowBackIcon,
-  Business as BusinessIcon,
-  AttachMoney as PriceIcon,
-  Info as InfoIcon,
-  LocationOn as LocationIcon,
-} from '@mui/icons-material'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { RootState } from '@/store/store'
-import { productService } from '@/services/productService'
-import { Product } from '@/types'
-import toast from 'react-hot-toast'
 
 const CustomerDashboardPage: React.FC = () => {
   const navigate = useNavigate()

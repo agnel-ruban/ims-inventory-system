@@ -1,30 +1,30 @@
 import React, { useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from './store/store'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { validateToken } from './store/slices/authSlice'
+import { AppDispatch, RootState } from './store/store'
 
 // Pages
-import LoginPage from './pages/LoginPage'
+import AlertsPage from './pages/AlertsPage'
+import CustomerDashboardPage from './pages/CustomerDashboardPage'
 import DashboardPage from './pages/DashboardPage'
-import ProductsPage from './pages/ProductsPage'
+import InventoryPage from './pages/InventoryPage'
+import LoginPage from './pages/LoginPage'
 import ProductCreatePage from './pages/ProductCreatePage'
 import ProductDetailPage from './pages/ProductDetailPage'
-import InventoryPage from './pages/InventoryPage'
-import PurchaseOrdersPage from './pages/PurchaseOrdersPage'
+import ProductsPage from './pages/ProductsPage'
 import PurchaseOrderCreatePage from './pages/PurchaseOrderCreatePage'
 import PurchaseOrderDetailPage from './pages/PurchaseOrderDetailPage'
-import SalesOrdersPage from './pages/SalesOrdersPage'
+import PurchaseOrdersPage from './pages/PurchaseOrdersPage'
 import SalesOrderCreatePage from './pages/SalesOrderCreatePage'
 import SalesOrderDetailsPage from './pages/SalesOrderDetailsPage'
-import AlertsPage from './pages/AlertsPage'
+import SalesOrdersPage from './pages/SalesOrdersPage'
 import UserManagementPage from './pages/UserManagementPage'
-import CustomerDashboardPage from './pages/CustomerDashboardPage'
 import WarehousePage from './pages/WarehousePage'
 
 // Components
-import Layout from './components/Layout/Layout'
 import LoadingSpinner from './components/Common/LoadingSpinner'
+import Layout from './components/Layout/Layout'
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode; allowedRoles?: string[] }> = ({
@@ -50,7 +50,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode; allowedRoles?: strin
 
 function App() {
   const dispatch = useDispatch<AppDispatch>()
-  const { isAuthenticated, loading } = useSelector((state: RootState) => state.auth)
+  const { loading } = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
     // Validate token on app start if token exists

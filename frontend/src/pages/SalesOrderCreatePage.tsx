@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import {
-  Box,
-  Typography,
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  IconButton,
-  Alert,
-  CircularProgress,
-  Chip,
-  Divider,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-} from '@mui/material'
-import {
-  Save as SaveIcon,
-  ArrowBack as ArrowBackIcon,
-  ShoppingCart as ShoppingCartIcon,
-  LocationOn as LocationIcon,
-  Inventory as InventoryIcon,
-  AttachMoney as PriceIcon,
-  CheckCircle as CheckCircleIcon,
-} from '@mui/icons-material'
-import { useSelector } from 'react-redux'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { salesOrderService } from '@/services/salesOrderService'
 import { RootState } from '@/store/store'
 import { Product, Warehouse } from '@/types'
-import { salesOrderService } from '@/services/salesOrderService'
-import { warehouseService } from '@/services/warehouseService'
+import {
+  ArrowBack as ArrowBackIcon,
+  Inventory as InventoryIcon,
+  AttachMoney as PriceIcon,
+  Save as SaveIcon,
+  ShoppingCart as ShoppingCartIcon
+} from '@mui/icons-material'
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Divider,
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography
+} from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const SalesOrderCreatePage: React.FC = () => {
   const navigate = useNavigate()

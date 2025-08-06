@@ -1,33 +1,32 @@
-import React from 'react'
+import { RootState } from '@/store/store'
+import {
+  Add as AddIcon,
+  Inventory as InventoryIcon,
+  LocalShipping as LocalShippingIcon,
+  Notifications as NotificationsIcon,
+  People as PeopleIcon,
+  ShoppingCart as ShoppingCartIcon,
+  Store as StoreIcon
+} from '@mui/icons-material'
 import {
   Box,
-  Typography,
-  Container,
-  Grid,
-  Card,
-  CardContent,
-  CardActions,
   Button,
-  Paper,
+  Card,
+  CardActions,
+  CardContent,
+  Container,
+  Divider,
+  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
+  Paper,
+  Typography,
 } from '@mui/material'
-import {
-  Dashboard as DashboardIcon,
-  Inventory as InventoryIcon,
-  ShoppingCart as ShoppingCartIcon,
-  LocalShipping as LocalShippingIcon,
-  Notifications as NotificationsIcon,
-  People as PeopleIcon,
-  Store as StoreIcon,
-  Add as AddIcon,
-} from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import { useNavigate } from 'react-router-dom'
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate()
