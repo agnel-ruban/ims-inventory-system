@@ -50,7 +50,7 @@ public class SecurityConfig {
                 // All other requests need authentication
                 .anyRequest().authenticated()
             )
-            .userDetailsService(userDetailsService)
+            .userDetailsService(userDetailsService);
             // Temporarily disable JWT filter to test
             // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
