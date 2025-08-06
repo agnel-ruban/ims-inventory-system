@@ -46,14 +46,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 logger.info("Token length: " + jwt.length());
                 logger.info("Is blacklisted: " + tokenBlacklistService.isBlacklisted(jwt));
                 logger.info("Blacklist size: " + tokenBlacklistService.getBlacklistSize());
-                
+
                 // Check if token is blacklisted
                 if (tokenBlacklistService.isBlacklisted(jwt)) {
                     logger.warn("Token is blacklisted - rejecting request");
                     handleTokenError(response, "Token has been invalidated due to password change. Please login again.", 401);
                     return;
                 }
-                
+
                 if (tokenProvider.validateToken(jwt)) {
                     String username = tokenProvider.getUsernameFromToken(jwt);
                     logger.info("Token validated for user: " + username);
@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     logger.info("Authentication set for user: " + username + " with authorities: " + userDetails.getAuthorities());
-                    
+
                     // Additional debug for purchase orders
                     if (request.getRequestURI().contains("/purchase-orders")) {
                         logger.info("Purchase order request - User authorities: " + userDetails.getAuthorities());
@@ -100,16 +100,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void handleTokenError(HttpServletResponse response, String message, int status) throws IOException {
         response.setStatus(status);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        
+
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("error", "Authentication failed");
         errorResponse.put("message", message);
         errorResponse.put("status", status);
-        
+
         if (status == 401) {
             errorResponse.put("code", "TOKEN_EXPIRED");
         }
-        
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), errorResponse);
     }
@@ -121,4 +121,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
-} 
+
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        // Skip filter for certain endpoints
+        String path = request.getServletPath();
+        return path.startsWith("/api/auth/") || path.startsWith("/api/public/");
+    }
+}
