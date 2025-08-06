@@ -131,19 +131,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // Skip filter for authentication endpoints
         String path = request.getServletPath();
         String fullPath = request.getRequestURI();
-        logger.info("Checking if should filter path: " + path + ", full URI: " + fullPath);
+        String method = request.getMethod();
         
-        // Check multiple possible patterns for auth endpoints
+        logger.info("=== JWT FILTER DEBUG ===");
+        logger.info("Method: " + method);
+        logger.info("Path: " + path);
+        logger.info("Full URI: " + fullPath);
+        
+        // Always skip for auth endpoints and OPTIONS requests
         boolean shouldSkip = path.startsWith("/auth/") || 
                            path.startsWith("/public/") ||
                            fullPath.contains("/auth/") ||
-                           fullPath.contains("/public/");
+                           fullPath.contains("/public/") ||
+                           method.equals("OPTIONS");
         
         if (shouldSkip) {
-            logger.info("Skipping JWT filter for path: " + path);
+            logger.info("✅ SKIPPING JWT filter for: " + fullPath);
         } else {
-            logger.info("Will apply JWT filter for path: " + path);
+            logger.info("❌ WILL APPLY JWT filter for: " + fullPath);
         }
+        logger.info("=== END JWT FILTER DEBUG ===");
+        
         return shouldSkip;
     }
 }

@@ -35,48 +35,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
-        System.out.println("Configuring SecurityFilterChain with CORS and auth rules");
+        System.out.println("Configuring SecurityFilterChain - SIMPLIFIED APPROACH");
         
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Public endpoints - be very explicit about auth endpoints
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/api/auth/validate").permitAll()
-                .requestMatchers("/auth/validate").permitAll()
-                .requestMatchers("/api/auth/change-password").permitAll()
-                .requestMatchers("/auth/change-password").permitAll()
-                .requestMatchers("/api/auth/test").permitAll()
-                .requestMatchers("/auth/test").permitAll()
-
-                // Admin only endpoints
-                .requestMatchers("/api/warehouses/**").hasRole("ADMIN")
-                .requestMatchers("/api/inventory/**").hasRole("ADMIN")
-                .requestMatchers("/api/purchase-orders/**").hasRole("ADMIN")
-                .requestMatchers("/api/alerts/**").hasRole("ADMIN")
-                .requestMatchers("/api/dashboard/**").hasRole("ADMIN")
-                .requestMatchers("/api/users/**").hasRole("ADMIN")
-
-                // Product endpoints - GET requires authentication (both roles), others require ADMIN
-                .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
-                .requestMatchers("/api/products/**").hasRole("ADMIN")
-
-                // Sales orders - both customers and admins can access (role-based filtering in service layer)
-                .requestMatchers("/api/sales-orders/**").authenticated()
-
+                // Allow ALL auth endpoints without any restrictions
+                .requestMatchers("/auth/**", "/api/auth/**").permitAll()
+                
+                // Allow OPTIONS requests (CORS preflight)
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                
                 // All other requests need authentication
                 .anyRequest().authenticated()
             )
             .userDetailsService(userDetailsService)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        System.out.println("SecurityFilterChain configuration completed");
+        System.out.println("SecurityFilterChain configuration completed - SIMPLIFIED");
         return http.build();
     }
 

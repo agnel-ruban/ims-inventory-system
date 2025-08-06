@@ -33,6 +33,15 @@ public class AuthController {
     @Autowired
     private com.example.ims.security.TokenBlacklistService tokenBlacklistService;
 
+    @GetMapping("/health")
+    public ResponseEntity<?> health() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "UP");
+        response.put("message", "Backend is running");
+        response.put("timestamp", new Date());
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/test")
     public ResponseEntity<?> test() {
         Map<String, Object> response = new HashMap<>();
