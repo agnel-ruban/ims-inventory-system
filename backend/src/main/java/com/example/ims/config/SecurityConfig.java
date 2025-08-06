@@ -30,13 +30,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
-                
+
                 // Admin only endpoints
                 .requestMatchers("/api/warehouses/**").hasRole("ADMIN")
                 .requestMatchers("/api/inventory/**").hasRole("ADMIN")
@@ -44,14 +45,14 @@ public class SecurityConfig {
                 .requestMatchers("/api/alerts/**").hasRole("ADMIN")
                 .requestMatchers("/api/dashboard/**").hasRole("ADMIN")
                 .requestMatchers("/api/users/**").hasRole("ADMIN")
-                
+
                 // Product endpoints - GET requires authentication (both roles), others require ADMIN
                 .requestMatchers(HttpMethod.GET, "/api/products/**").authenticated()
                 .requestMatchers("/api/products/**").hasRole("ADMIN")
-                
+
                 // Sales orders - both customers and admins can access (role-based filtering in service layer)
                 .requestMatchers("/api/sales-orders/**").authenticated()
-                
+
                 // All other requests need authentication
                 .anyRequest().authenticated()
             )
@@ -70,4 +71,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-} 
+}
