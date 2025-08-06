@@ -36,6 +36,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
+        System.out.println("Configuring SecurityFilterChain with CORS and auth rules");
+        
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
@@ -43,6 +45,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/auth/**").permitAll() // Also allow without /api prefix
 
                 // Admin only endpoints
                 .requestMatchers("/api/warehouses/**").hasRole("ADMIN")
@@ -65,6 +68,7 @@ public class SecurityConfig {
             .userDetailsService(userDetailsService)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        System.out.println("SecurityFilterChain configuration completed");
         return http.build();
     }
 
