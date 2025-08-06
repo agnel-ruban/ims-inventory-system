@@ -31,6 +31,16 @@ const LoginPage: React.FC = () => {
     dispatch(clearError())
   }, [dispatch])
 
+  // Clear password field when there's an error
+  useEffect(() => {
+    if (error) {
+      setFormData(prev => ({
+        ...prev,
+        password: ''
+      }))
+    }
+  }, [error])
+
   // Handle successful login redirect
   useEffect(() => {
     if (isAuthenticated && user) {

@@ -29,8 +29,23 @@ export const login = createAsyncThunk(
       toast.success('Login successful!')
       return response
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Login failed')
-      return rejectWithValue(error.response?.data?.message || 'Login failed')
+      // Provide user-friendly error messages
+      let errorMessage = 'Login failed. Please try again.'
+      
+      if (error.response?.status === 401) {
+        errorMessage = 'Invalid username or password. Please check your credentials and try again.'
+      } else if (error.response?.status === 403) {
+        errorMessage = 'Access denied. Please contact your administrator.'
+      } else if (error.response?.status === 500) {
+        errorMessage = 'Server error. Please try again later.'
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message
+      } else if (error.message === 'Network Error') {
+        errorMessage = 'Network error. Please check your connection and try again.'
+      }
+      
+      toast.error(errorMessage)
+      return rejectWithValue(errorMessage)
     }
   }
 )
