@@ -35,26 +35,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        System.out.println("Configuring SecurityFilterChain - SIMPLIFIED APPROACH");
+        System.out.println("=== CONFIGURING SECURITY - ULTIMATE FIX ===");
         
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Allow ALL auth endpoints without any restrictions
-                .requestMatchers("/auth/**", "/api/auth/**").permitAll()
-                
-                // Allow OPTIONS requests (CORS preflight)
+                // Disable security completely for auth endpoints
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/error").permitAll()
                 
                 // All other requests need authentication
                 .anyRequest().authenticated()
             )
             .userDetailsService(userDetailsService)
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            // Temporarily disable JWT filter to test
+            // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        System.out.println("SecurityFilterChain configuration completed - SIMPLIFIED");
+        System.out.println("=== SECURITY CONFIGURATION COMPLETED ===");
         return http.build();
     }
 
