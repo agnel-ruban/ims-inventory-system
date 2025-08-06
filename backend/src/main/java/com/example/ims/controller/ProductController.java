@@ -1,5 +1,6 @@
 package com.example.ims.controller;
 
+import com.example.ims.dto.ProductWithStockDTO;
 import com.example.ims.model.Product;
 import com.example.ims.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*")
 public class ProductController {
     
     @Autowired

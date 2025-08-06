@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ import java.util.Map;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -122,9 +126,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        // Skip filter for certain endpoints
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // Skip filter for authentication endpoints
         String path = request.getServletPath();
-        return path.startsWith("/api/auth/") || path.startsWith("/api/public/");
+        logger.info("Checking if should filter path: " + path);
+        
+        boolean shouldSkip = path.startsWith("/api/auth/") || path.startsWith("/api/public/");
+        if (shouldSkip) {
+            logger.info("Skipping JWT filter for path: " + path);
+        }
+        return shouldSkip;
     }
 }
